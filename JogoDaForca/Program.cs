@@ -15,6 +15,7 @@ class Program
         while (jogarNovamente)
         {
             string palavraSecreta = LerPalavraSecreta();
+            string dica = LerDica();
 
             int tentativasRestantes = 6;
             char[] letrasUsadas = new char[26];
@@ -24,6 +25,7 @@ class Program
                 Console.Clear();
                 Console.WriteLine("Jogo da Forca");
                 DesenharBoneco(tentativasRestantes);
+                Console.WriteLine($"Dica: {dica}");
                 MostrarPalavra(palavraSecreta, letrasUsadas);
                 Console.WriteLine($"Vidas Restantes: {tentativasRestantes}");
 
@@ -85,6 +87,7 @@ class Program
             Console.WriteLine("Jogo da Forca");
             DesenharBoneco(tentativasRestantes);
             MostrarPalavra(palavraSecreta, letrasUsadas);
+            Console.WriteLine($"Dica: {dica}");
             Console.WriteLine($"Vidas Restantes: {tentativasRestantes}");
 
             if (tentativasRestantes == 0)
@@ -123,6 +126,28 @@ class Program
         while (!Regex.IsMatch(palavraSecreta, "^[a-zA-Z]+$"));
 
         return palavraSecreta;
+    }
+
+    static string LerDica()
+    {
+        string dica;
+
+        do
+        {
+            Console.Write("Digite uma dica para a palavra secreta (apenas letras do alfabeto): ");
+            dica = Console.ReadLine().ToLowerInvariant();
+
+            if (!Regex.IsMatch(dica, "^[a-zA-Z]+$"))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nA dica deve conter apenas letras do alfabeto.");
+                Console.ResetColor();
+                Console.ReadKey();
+            }
+        }
+        while (!Regex.IsMatch(dica, "^[a-zA-Z]+$"));
+
+        return dica;
     }
 
     static void DesenharBoneco(int tentativasRestantes)
